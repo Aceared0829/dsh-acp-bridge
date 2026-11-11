@@ -256,6 +256,38 @@ test('mode only changes before the first turn', async () => {
   })
 })
 
+test('mode presets carry no client-specific metadata', async () => {
+  // A previous attempt tagged each preset with JetBrains' permission-kind
+  // metadata so its mode menu would keep them. That made JetBrains offer to
+  // grant full access to a preset that is not a permission tier, and the preset
+  // still did not switch. The roster must stay plain.
+  const agent = fakeAgent({ provider: 'prov', model: 'plain' })
+  const agentPresets = {
+    list: async () => [
+      { id: 'default', name: 'Default', isDefault: true },
+      { id: 'super-code', name: 'Super code' },
+      { id: 'minimal', name: 'Minimal' },
+    ],
+    presetForSession: () => null,
+    select: async () => 'default',
+  }
+  const control = new AcpModelControl({ llm: fakeLlm(), agentPresets }, agent, {
+    model: false,
+    reasoning: false,
+    mode: true,
+    permission: false,
+  })
+  const options = await control.options()
+  const mode = options.find((option) => option.id === 'mode')
+  for (const entry of mode.options) {
+    assert.equal(entry._meta, undefined, `${entry.value} must not carry _meta`)
+  }
+  const legacy = await control.modes()
+  for (const entry of legacy.availableModes) {
+    assert.equal(entry._meta, undefined, `${entry.id} must not carry _meta`)
+  }
+})
+
 test('legacy modes mirror the mode option', async () => {
   const agent = fakeAgent({ provider: 'prov', model: 'plain' })
   const agentPresets = {
