@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" font-family="Segoe UI, Microsoft YaHei, system-ui, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6ea8fe"/>
+    </marker>
+    <marker id="arrowDim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a869a"/>
+    </marker>
+    <linearGradient id="panelBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1b2330"/>
+      <stop offset="100%" stop-color="#141a24"/>
+    </linearGradient>
+    <linearGradient id="bridgeBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1d2b3f"/>
+      <stop offset="100%" stop-color="#16202e"/>
+    </linearGradient>
+    <linearGradient id="coreBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1f2430"/>
+      <stop offset="100%" stop-color="#171b24"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="760" fill="#0e1219"/>
+
+  <text x="40" y="46" fill="#e8eef8" font-size="22" font-weight="700">ACP Bridge — 把 DSH 的 AgentLoop 暴露给任意 ACP 客户端</text>
+  <text x="40" y="72" fill="#7a869a" font-size="13">插件：@local/dsh-acp-bridge　|　传输：stdio ⇄ WebSocket(loopback + token)　|　宿主：DSH Desktop / dsh web</text>
+
+  <!-- Column headers -->
+  <text x="52" y="126" fill="#8fa3bf" font-size="12" font-weight="600" letter-spacing="1">外部 ACP 客户端</text>
+  <text x="360" y="126" fill="#8fa3bf" font-size="12" font-weight="600" letter-spacing="1">胶水层（客户端拉起）</text>
+  <text x="650" y="126" fill="#8fa3bf" font-size="12" font-weight="600" letter-spacing="1">DSH 宿主进程</text>
+  <text x="1010" y="126" fill="#8fa3bf" font-size="12" font-weight="600" letter-spacing="1">DSH 内核服务</text>
+
+  <!-- Clients -->
+  <g>
+    <rect x="40" y="146" width="250" height="72" rx="10" fill="url(#panelBg)" stroke="#2e3a4d"/>
+    <text x="60" y="175" fill="#dce6f5" font-size="15" font-weight="600">Zed</text>
+    <text x="60" y="198" fill="#7a869a" font-size="12">agent_servers → 自定义命令</text>
+
+    <rect x="40" y="232" width="250" height="72" rx="10" fill="url(#panelBg)" stroke="#2e3a4d"/>
+    <text x="60" y="261" fill="#dce6f5" font-size="15" font-weight="600">Neovim</text>
+    <text x="60" y="284" fill="#7a869a" font-size="12">codecompanion / avante</text>
+
+    <rect x="40" y="318" width="250" height="72" rx="10" fill="url(#panelBg)" stroke="#2e3a4d"/>
+    <text x="60" y="347" fill="#dce6f5" font-size="15" font-weight="600">JetBrains / Emacs</text>
+    <text x="60" y="370" fill="#7a869a" font-size="12">任何 ACP v1 客户端</text>
+
+    <rect x="40" y="404" width="250" height="72" rx="10" fill="#151d28" stroke="#2b3648" stroke-dasharray="5 4"/>
+    <text x="60" y="433" fill="#9fb0c9" font-size="15" font-weight="600">脚本 / 自研客户端</text>
+    <text x="60" y="456" fill="#647089" font-size="12">@agentclientprotocol/sdk</text>
+  </g>
+
+  <!-- stdio shim -->
+  <g>
+    <rect x="340" y="228" width="230" height="150" rx="12" fill="url(#panelBg)" stroke="#3b4a63"/>
+    <text x="360" y="258" fill="#dce6f5" font-size="15" font-weight="600">dsh-acp-stdio</text>
+    <text x="360" y="280" fill="#7a869a" font-size="11.5">裸 node 脚本 · 零依赖</text>
+    <line x1="356" y1="292" x2="554" y2="292" stroke="#2b3648"/>
+    <text x="360" y="313" fill="#9fb0c9" font-size="12">stdin/stdout ⇄ NDJSON</text>
+    <text x="360" y="334" fill="#9fb0c9" font-size="12">逐帧转发到 WS</text>
+    <text x="360" y="355" fill="#9fb0c9" font-size="12">断线重连 / 背压</text>
+
+    <rect x="340" y="398" width="230" height="78" rx="10" fill="#131a24" stroke="#2b3648"/>
+    <text x="358" y="424" fill="#8fa3bf" font-size="12" font-weight="600">生成的启动器</text>
+    <text x="358" y="446" fill="#647089" font-size="11">%DSH_HOME%\acp-bridge\bin</text>
+    <text x="358" y="464" fill="#647089" font-size="11">acp.cmd / acp.sh（含 token）</text>
+  </g>
+
+  <!-- Bridge -->
+  <g>
+    <rect x="628" y="146" width="330" height="470" rx="14" fill="url(#bridgeBg)" stroke="#3d5578"/>
+    <text x="650" y="178" fill="#cfe0f7" font-size="16" font-weight="700">acp-bridge 插件（Host）</text>
+    <text x="650" y="199" fill="#6ea8fe" font-size="11.5">/acp-bridge/ws　loopback + Bearer token</text>
+
+    <rect x="650" y="216" width="286" height="86" rx="9" fill="#16202e" stroke="#35506f"/>
+    <text x="668" y="240" fill="#dce6f5" font-size="13.5" font-weight="600">ACP 协议核心</text>
+    <text x="668" y="261" fill="#8fa3bf" font-size="11.5">initialize · session/new · prompt · cancel</text>
+    <text x="668" y="280" fill="#8fa3bf" font-size="11.5">set_config_option · set_mode · request_permission</text>
+    <text x="668" y="296" fill="#8fa3bf" font-size="11.5">session/list · resume · close · delete</text>
+
+    <rect x="650" y="314" width="286" height="76" rx="9" fill="#16202e" stroke="#35506f"/>
+    <text x="668" y="338" fill="#dce6f5" font-size="13.5" font-weight="600">会话注册表</text>
+    <text x="668" y="359" fill="#8fa3bf" font-size="11.5">AcpSession × N（各自 owns Agent）</text>
+    <text x="668" y="377" fill="#8fa3bf" font-size="11.5">事件投影 · 更新串行化 · 静默拆除</text>
+
+    <rect x="650" y="402" width="286" height="76" rx="9" fill="#16202e" stroke="#35506f"/>
+    <text x="668" y="426" fill="#dce6f5" font-size="13.5" font-weight="600">配置选项投影器</text>
+    <text x="668" y="447" fill="#8fa3bf" font-size="11.5">model / thought_level / mode</text>
+    <text x="668" y="465" fill="#8fa3bf" font-size="11.5">model_config / _dsh_permission</text>
+
+    <rect x="650" y="490" width="286" height="76" rx="9" fill="#16202e" stroke="#35506f"/>
+    <text x="668" y="514" fill="#dce6f5" font-size="13.5" font-weight="600">能力开关 · 审计日志</text>
+    <text x="668" y="535" fill="#8fa3bf" font-size="11.5">图片 / 斜杠命令 / plan / usage</text>
+    <text x="668" y="553" fill="#8fa3bf" font-size="11.5">最近 500 帧 JSON-RPC（脱敏）</text>
+  </g>
+
+  <!-- Core services -->
+  <g>
+    <rect x="996" y="146" width="248" height="470" rx="14" fill="url(#coreBg)" stroke="#333c4d"/>
+    <text x="1016" y="178" fill="#c9d4e4" font-size="15" font-weight="700">ctx.*（已存在）</text>
+
+    <rect x="1014" y="196" width="212" height="46" rx="8" fill="#1b2130" stroke="#2e384a"/>
+    <text x="1028" y="216" fill="#dce6f5" font-size="12.5" font-weight="600">agentLoop / agents</text>
+    <text x="1028" y="233" fill="#6f7c93" font-size="11">create · resume · dispose</text>
+
+    <rect x="1014" y="250" width="212" height="46" rx="8" fill="#1b2130" stroke="#2e384a"/>
+    <text x="1028" y="270" fill="#dce6f5" font-size="12.5" font-weight="600">llm</text>
+    <text x="1028" y="287" fill="#6f7c93" font-size="11">listProviders · resolveModelInfo</text>
+
+    <rect x="1014" y="304" width="212" height="46" rx="8" fill="#1b2130" stroke="#2e384a"/>
+    <text x="1028" y="324" fill="#dce6f5" font-size="12.5" font-weight="600">agentPresets</text>
+    <text x="1028" y="341" fill="#6f7c93" font-size="11">list · select · mount → modes</text>
+
+    <rect x="1014" y="358" width="212" height="46" rx="8" fill="#1b2130" stroke="#2e384a"/>
+    <text x="1028" y="378" fill="#dce6f5" font-size="12.5" font-weight="600">approval</text>
+    <text x="1028" y="395" fill="#6f7c93" font-size="11">approval/request → 权限询问</text>
+
+    <rect x="1014" y="412" width="212" height="46" rx="8" fill="#1b2130" stroke="#2e384a"/>
+    <text x="1028" y="432" fill="#dce6f5" font-size="12.5" font-weight="600">commands</text>
+    <text x="1028" y="449" fill="#6f7c93" font-size="11">list · execute → 斜杠命令</text>
+
+    <rect x="1014" y="466" width="212" height="46" rx="8" fill="#1b2130" stroke="#2e384a"/>
+    <text x="1028" y="486" fill="#dce6f5" font-size="12.5" font-weight="600">sessionPersistence</text>
+    <text x="1028" y="503" fill="#6f7c93" font-size="11">list · stat · flush</text>
+
+    <rect x="1014" y="520" width="212" height="46" rx="8" fill="#1b2130" stroke="#2e384a"/>
+    <text x="1028" y="540" fill="#dce6f5" font-size="12.5" font-weight="600">tokenMeter / tools</text>
+    <text x="1028" y="557" fill="#6f7c93" font-size="11">usage 更新 · 工具视图</text>
+  </g>
+
+  <!-- Management panel -->
+  <g>
+    <rect x="340" y="520" width="230" height="96" rx="12" fill="url(#panelBg)" stroke="#3b4a63"/>
+    <text x="358" y="548" fill="#dce6f5" font-size="14" font-weight="600">ACP Bridge 管理面板</text>
+    <text x="358" y="570" fill="#7a869a" font-size="11">Web UI · 侧栏「ACP」页 + 会话内胶囊</text>
+    <text x="358" y="590" fill="#7a869a" font-size="11">连接 · 会话 · 默认值 · 片段 · 流量</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#6ea8fe" stroke-width="1.8" fill="none" marker-end="url(#arrow)">
+    <path d="M 290 264 L 336 285"/>
+    <path d="M 480 228 L 480 200 L 624 200"/>
+    <path d="M 570 322 L 624 322"/>
+    <path d="M 958 300 L 992 300"/>
+    <path d="M 958 340 L 992 330"/>
+    <path d="M 958 380 L 992 380"/>
+  </g>
+  <g stroke="#7a869a" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#arrowDim)">
+    <path d="M 570 566 L 624 540"/>
+    <path d="M 958 220 L 992 220"/>
+  </g>
+
+  <text x="352" y="182" fill="#5f6d84" font-size="11">ACP v1 / NDJSON</text>
+  <text x="500" y="192" fill="#5f6d84" font-size="11">WebSocket</text>
+  <text x="964" y="292" fill="#5f6d84" font-size="11">in-proc</text>
+
+  <!-- legend -->
+  <g>
+    <rect x="40" y="500" width="250" height="60" rx="8" fill="#111823" stroke="#232d3c"/>
+    <line x1="56" y1="522" x2="88" y2="522" stroke="#6ea8fe" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="96" y="526" fill="#8fa3bf" font-size="11.5">请求 / 数据流</text>
+    <line x1="56" y1="544" x2="88" y2="544" stroke="#7a869a" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowDim)"/>
+    <text x="96" y="548" fill="#8fa3bf" font-size="11.5">控制 / 观测</text>
+  </g>
+
+  <text x="40" y="716" fill="#4d586b" font-size="11.5">关键点：客户端只能拉起子进程，所以必须有一层 stdio 垫片；真正的 AgentLoop、模型路由和会话存储都留在宿主里，多编辑器共享同一实例。</text>
+</svg>

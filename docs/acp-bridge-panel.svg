@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860" font-family="Segoe UI, Microsoft YaHei, system-ui, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a869a"/>
+    </marker>
+  </defs>
+  <rect width="1280" height="860" fill="#0e1219"/>
+
+  <text x="40" y="42" fill="#e8eef8" font-size="20" font-weight="700">管理面板线框：侧栏「ACP」页（Web UI 与桌面端同一份）</text>
+  <text x="40" y="66" fill="#7a869a" font-size="12.5">注册进 main panel（key: acp-bridge）+ 会话内胶囊（conversation.input.right）+ 设置页片段</text>
+
+  <!-- app chrome -->
+  <rect x="40" y="86" width="1200" height="700" rx="12" fill="#111823" stroke="#242e3d"/>
+
+  <!-- left sidebar -->
+  <rect x="40" y="86" width="180" height="700" rx="12" fill="#0d131c"/>
+  <line x1="220" y1="86" x2="220" y2="786" stroke="#1e2735"/>
+  <text x="58" y="116" fill="#96a6bd" font-size="12" font-weight="600">会话</text>
+  <g font-size="11.5" fill="#5f6d84">
+    <text x="58" y="142">工作区 A</text>
+    <text x="58" y="164">session 05e2…</text>
+  </g>
+  <line x1="58" y1="182" x2="202" y2="182" stroke="#1e2735"/>
+  <text x="58" y="208" fill="#96a6bd" font-size="12" font-weight="600">面板</text>
+  <g font-size="11.5" fill="#5f6d84">
+    <text x="58" y="234">会话</text>
+    <text x="58" y="256">文件</text>
+    <text x="58" y="278">插件</text>
+  </g>
+  <rect x="50" y="296" width="160" height="30" rx="6" fill="#1a2536" stroke="#35577f"/>
+  <circle cx="66" cy="311" r="3.5" fill="#57c99a"/>
+  <text x="78" y="315" fill="#cfe0f7" font-size="12" font-weight="600">ACP</text>
+  <text x="176" y="315" fill="#6ea8fe" font-size="11" text-anchor="end">3</text>
+
+  <!-- main content -->
+  <text x="244" y="118" fill="#e8eef8" font-size="17" font-weight="700">ACP Bridge</text>
+  <rect x="356" y="104" width="64" height="20" rx="10" fill="#16301f" stroke="#2e6b45"/>
+  <circle cx="369" cy="114" r="3.5" fill="#57c99a"/>
+  <text x="378" y="118" fill="#8fd9ae" font-size="11">监听中</text>
+  <text x="432" y="118" fill="#5f6d84" font-size="11.5">ws://127.0.0.1:47921/acp-bridge/ws</text>
+
+  <!-- status strip -->
+  <g>
+    <rect x="244" y="136" width="238" height="74" rx="9" fill="#151d29" stroke="#242e3d"/>
+    <text x="260" y="160" fill="#6f7c93" font-size="11.5">活动连接</text>
+    <text x="260" y="192" fill="#e8eef8" font-size="24" font-weight="700">2</text>
+    <text x="292" y="192" fill="#5f6d84" font-size="11">Zed · Neovim</text>
+
+    <rect x="494" y="136" width="238" height="74" rx="9" fill="#151d29" stroke="#242e3d"/>
+    <text x="510" y="160" fill="#6f7c93" font-size="11.5">活跃 ACP 会话</text>
+    <text x="510" y="192" fill="#e8eef8" font-size="24" font-weight="700">3</text>
+    <text x="542" y="192" fill="#5f6d84" font-size="11">1 个 turn 进行中</text>
+
+    <rect x="744" y="136" width="238" height="74" rx="9" fill="#151d29" stroke="#242e3d"/>
+    <text x="760" y="160" fill="#6f7c93" font-size="11.5">今日 token</text>
+    <text x="760" y="186" fill="#e8eef8" font-size="24" font-weight="700">184.2k</text>
+    <text x="760" y="203" fill="#5f6d84" font-size="11">缓存命中 61%</text>
+
+    <rect x="994" y="136" width="226" height="74" rx="9" fill="#151d29" stroke="#242e3d"/>
+    <text x="1010" y="160" fill="#6f7c93" font-size="11.5">拒绝的审批</text>
+    <text x="1010" y="192" fill="#e8eef8" font-size="24" font-weight="700">7</text>
+    <text x="1042" y="192" fill="#5f6d84" font-size="11">今日·1 次超时</text>
+  </g>
+
+  <!-- sessions table -->
+  <text x="244" y="244" fill="#96a6bd" font-size="12.5" font-weight="600">会话</text>
+  <rect x="244" y="256" width="976" height="24" rx="4" fill="#161d27"/>
+  <g font-size="11" fill="#8fa3bf" font-weight="600">
+    <text x="258" y="273">客户端</text>
+    <text x="370" y="273">工作目录</text>
+    <text x="640" y="273">模式</text>
+    <text x="760" y="273">模型</text>
+    <text x="900" y="273">思考强度</text>
+    <text x="1000" y="273">状态</text>
+    <text x="1120" y="273">操作</text>
+  </g>
+  <g font-size="11.5" fill="#9fb0c9">
+    <text x="258" y="304" fill="#dce6f5">Zed</text>
+    <text x="370" y="304">D:\RedSparkHarness</text>
+    <text x="640" y="304">super-code</text>
+    <text x="760" y="304">deepseek-v4.1</text>
+    <text x="900" y="304">high</text>
+    <circle cx="1006" cy="300" r="3.5" fill="#57c99a"/>
+    <text x="1016" y="304">运行中</text>
+    <text x="1120" y="304" fill="#6ea8fe">详情</text>
+    <text x="1164" y="304" fill="#c9764e">断开</text>
+    <line x1="244" y1="316" x2="1220" y2="316" stroke="#1b2330"/>
+
+    <text x="258" y="342" fill="#dce6f5">Neovim</text>
+    <text x="370" y="342">D:\AILocomotonSystem</text>
+    <text x="640" y="342">default</text>
+    <text x="760" y="342">deepseek-flash</text>
+    <text x="900" y="342">off</text>
+    <circle cx="1006" cy="338" r="3.5" fill="#e0a84e"/>
+    <text x="1016" y="342">等待审批</text>
+    <text x="1120" y="342" fill="#6ea8fe">详情</text>
+    <text x="1164" y="342" fill="#c9764e">断开</text>
+    <line x1="244" y1="354" x2="1220" y2="354" stroke="#1b2330"/>
+
+    <text x="258" y="380" fill="#dce6f5">script</text>
+    <text x="370" y="380">C:\Users\zzn19\work</text>
+    <text x="640" y="380">default</text>
+    <text x="760" y="380">kimi-k2</text>
+    <text x="900" y="380">medium</text>
+    <circle cx="1006" cy="376" r="3.5" fill="#5f6d84"/>
+    <text x="1016" y="380">空闲</text>
+    <text x="1120" y="380" fill="#6ea8fe">详情</text>
+    <text x="1164" y="380" fill="#c9764e">断开</text>
+  </g>
+
+  <!-- two-column lower -->
+  <!-- left: options -->
+  <text x="244" y="426" fill="#96a6bd" font-size="12.5" font-weight="600">对外暴露的选项（默认值 · 逐项开关）</text>
+  <rect x="244" y="438" width="476" height="320" rx="9" fill="#141c27" stroke="#242e3d"/>
+  <g font-size="11.5" fill="#9fb0c9">
+    <text x="262" y="466" fill="#dce6f5" font-weight="600">model</text>
+    <text x="400" y="466" fill="#5f6d84">按 provider 分组，取自实时 llm 目录</text>
+    <rect x="676" y="454" width="30" height="16" rx="8" fill="#25543a" stroke="#3d7d55"/>
+    <circle cx="697" cy="462" r="5.5" fill="#8fd9ae"/>
+
+    <text x="262" y="500" fill="#dce6f5" font-weight="600">reasoning_effort</text>
+    <text x="400" y="500" fill="#5f6d84">仅当模型声明 reasoning 时出现</text>
+    <rect x="676" y="488" width="30" height="16" rx="8" fill="#25543a" stroke="#3d7d55"/>
+    <circle cx="697" cy="496" r="5.5" fill="#8fd9ae"/>
+
+    <text x="262" y="534" fill="#dce6f5" font-weight="600">mode（agent 模式）</text>
+    <text x="400" y="534" fill="#5f6d84">来自 agentPresets 名单</text>
+    <rect x="676" y="522" width="30" height="16" rx="8" fill="#25543a" stroke="#3d7d55"/>
+    <circle cx="697" cy="530" r="5.5" fill="#8fd9ae"/>
+
+    <text x="262" y="568" fill="#dce6f5" font-weight="600">_dsh_permission</text>
+    <text x="400" y="568" fill="#5f6d84">审批策略预设（只读/常规/放开）</text>
+    <rect x="676" y="556" width="30" height="16" rx="8" fill="#25543a" stroke="#3d7d55"/>
+    <circle cx="697" cy="564" r="5.5" fill="#8fd9ae"/>
+
+    <text x="262" y="602" fill="#dce6f5" font-weight="600">_dsh_image_input</text>
+    <text x="400" y="602" fill="#5f6d84">需要附件库 + 当前模型多模态</text>
+    <rect x="676" y="590" width="30" height="16" rx="8" fill="#2a303c" stroke="#3a4354"/>
+    <circle cx="685" cy="598" r="5.5" fill="#6f7c93"/>
+
+    <text x="262" y="636" fill="#dce6f5" font-weight="600">_dsh_slash_commands</text>
+    <text x="400" y="636" fill="#5f6d84">把 commands 注册表映射成 available_commands</text>
+    <rect x="676" y="624" width="30" height="16" rx="8" fill="#2a303c" stroke="#3a4354"/>
+    <circle cx="685" cy="632" r="5.5" fill="#6f7c93"/>
+
+    <text x="262" y="670" fill="#dce6f5" font-weight="600">_dsh_plan / _dsh_usage</text>
+    <text x="400" y="670" fill="#5f6d84">plan 与上下文用量上报（v1 标准更新）</text>
+    <rect x="676" y="658" width="30" height="16" rx="8" fill="#25543a" stroke="#3d7d55"/>
+    <circle cx="697" cy="666" r="5.5" fill="#8fd9ae"/>
+  </g>
+  <text x="262" y="706" fill="#4d586b" font-size="11">关掉的选项不下发，客户端看不到就不显示；currentValue 始终保证可用。</text>
+  <text x="262" y="728" fill="#4d586b" font-size="11">改动写入本 profile 的 cordis.patch.yml，走 configEditor。</text>
+  <text x="262" y="750" fill="#4d586b" font-size="11">服务重启后仍生效。</text>
+
+  <!-- right: snippets -->
+  <text x="744" y="426" fill="#96a6bd" font-size="12.5" font-weight="600">接入片段</text>
+  <rect x="744" y="438" width="476" height="150" rx="9" fill="#141c27" stroke="#242e3d"/>
+  <g font-size="11.5">
+    <text x="760" y="464" fill="#8fa3bf" font-weight="600">Zed（settings.json）</text>
+    <text x="760" y="486" fill="#7f8fa6" font-family="Consolas, monospace" font-size="11">"agent_servers": { "dsh": {</text>
+    <text x="784" y="504" fill="#7f8fa6" font-family="Consolas, monospace" font-size="11">"command": { "path": "%DSH_HOME%\\acp-bridge\\bin\\acp.cmd" }</text>
+    <text x="760" y="522" fill="#7f8fa6" font-family="Consolas, monospace" font-size="11">} }</text>
+    <text x="760" y="548" fill="#8fa3bf" font-weight="600">通用 shell</text>
+    <text x="760" y="568" fill="#7f8fa6" font-family="Consolas, monospace" font-size="11">dsh-acp-bridge print-launcher --format cmd</text>
+    <rect x="1080" y="456" width="120" height="24" rx="6" fill="#1a2536" stroke="#35577f"/>
+    <text x="1140" y="472" fill="#9fc7ff" font-size="11.5" text-anchor="middle">复制</text>
+  </g>
+
+  <!-- traffic -->
+  <text x="744" y="612" fill="#96a6bd" font-size="12.5" font-weight="600">最近流量（脱敏，可暂停/清空）</text>
+  <rect x="744" y="624" width="476" height="134" rx="9" fill="#0f151e" stroke="#242e3d"/>
+  <g font-size="10.5" font-family="Consolas, monospace">
+    <text x="760" y="648" fill="#4f8f6b">→ session/prompt        sess…a19  text×1</text>
+    <text x="760" y="666" fill="#5a7fa8">← session/update        agent_thought_chunk</text>
+    <text x="760" y="684" fill="#5a7fa8">← session/update        tool_call  bash</text>
+    <text x="760" y="702" fill="#a88a4e">↔ request_permission    allow_once</text>
+    <text x="760" y="720" fill="#5a7fa8">← session/update        usage_update 92.4k/200k</text>
+    <text x="760" y="738" fill="#4f8f6b">→ session/cancel        $/cancel_request</text>
+  </g>
+
+  <!-- composer capsule -->
+  <text x="40" y="812" fill="#8fa3bf" font-size="12" font-weight="600">会话内胶囊（conversation.input.right）：</text>
+  <rect x="300" y="796" width="318" height="26" rx="13" fill="#1a2536" stroke="#35577f"/>
+  <circle cx="316" cy="809" r="4" fill="#57c99a"/>
+  <text x="328" y="813" fill="#cfe0f7" font-size="11.5">ACP · Zed</text>
+  <text x="404" y="813" fill="#6f7c93" font-size="11">super-code · high · ws#1</text>
+  <text x="638" y="812" fill="#5f6d84" font-size="11.5">← 点开可看到「这个会话正被谁驱动」，并允许一键踢掉该客户端</text>
+
+  <text x="40" y="846" fill="#4d586b" font-size="11.5">面板只做观测与控制：所有真正的执行仍在 Host 里，界面不含任何 ACP 协议逻辑；断开/踢客户端都走同一个 disposer。</text>
+</svg>

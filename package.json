@@ -1,0 +1,81 @@
+{
+    "name":  "dsh-acp-bridge",
+    "version":  "0.1.0",
+    "description":  "Expose DeepSeek Harness agents over the Agent Client Protocol so Zed, Neovim, JetBrains or any ACP client can drive this app\u0027s agent loop, with model, reasoning effort and agent preset control, plus a management panel.",
+    "keywords":  [
+                     "deepseek",
+                     "deepseek-harness",
+                     "dsh",
+                     "dsh-plugin",
+                     "acp",
+                     "agent-client-protocol",
+                     "zed",
+                     "neovim",
+                     "coding-agent"
+                 ],
+    "homepage":  "https://github.com/Aceared0829/dsh-acp-bridge#readme",
+    "repository":  {
+                       "type":  "git",
+                       "url":  "git+https://github.com/Aceared0829/dsh-acp-bridge.git"
+                   },
+    "bugs":  {
+                 "url":  "https://github.com/Aceared0829/dsh-acp-bridge/issues"
+             },
+    "author":  "Aceared0829",
+    "license":  "MIT",
+    "type":  "module",
+    "main":  "lib/index.js",
+    "exports":  {
+                    ".":  "./lib/index.js",
+                    "./client":  "./lib/client.js",
+                    "./cordis.patch.yml":  "./cordis.patch.yml",
+                    "./locale/*.json":  "./locale/*.json",
+                    "./icon":  "./icon.svg",
+                    "./package.json":  "./package.json"
+                },
+    "files":  [
+                  "lib",
+                  "bin",
+                  "locale",
+                  "cordis.patch.yml",
+                  "icon.svg",
+                  "README.md",
+                  "LICENSE"
+              ],
+    "bin":  {
+                "dsh-acp-stdio":  "./bin/cli.mjs"
+            },
+    "dsh":  {
+                "bundle":  {
+                               "patch":  "./cordis.patch.yml"
+                           },
+                "client":  {
+                               "platform":  "web",
+                               "inject":  [
+                                              "@deepseek-ai/dsh-client-ui-slots",
+                                              "@deepseek-ai/dsh-client-locale"
+                                          ]
+                           }
+            },
+    "engines":  {
+                    "node":  "\u003e=20"
+                },
+    "scripts":  {
+                    "test":  "node --test test/unit.test.js test/projection.test.js test/transport.test.js test/shim.test.js \u0026\u0026 node test/host-smoke.mjs"
+                },
+    "dependencies":  {
+                         "@agentclientprotocol/sdk":  "1.5.0",
+                         "ws":  "^8.18.0"
+                     },
+    "peerDependencies":  {
+                             "@deepseek-ai/schemastery":  "~3.19.0"
+                         },
+    "peerDependenciesMeta":  {
+                                 "@deepseek-ai/schemastery":  {
+                                                                  "optional":  true
+                                                              }
+                             },
+    "devDependencies":  {
+                            "@deepseek-ai/schemastery":  "^3.19.0"
+                        }
+}

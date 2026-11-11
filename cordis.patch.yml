@@ -1,0 +1,23 @@
+# dsh-acp-bridge bundle patch.
+# One Host row (the bridge itself, owning the ACP server and its HTTP/WS routes)
+# and no client row: the client half is loaded through dsh.client in package.json.
+
+- insert:
+    - id: acp-bridge
+      name: dsh-acp-bridge
+      config:
+        enabled: true
+        path: /dsh-acp-bridge
+        host: 127.0.0.1
+        provider: ''
+        model: ''
+        approvalTimeoutMs: 120000
+        expose:
+          model: true
+          reasoning: true
+          mode: true
+          permission: true
+          commands: true
+          plan: true
+          usage: true
+          images: false
