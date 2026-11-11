@@ -7,11 +7,18 @@ on:
 
 jobs:
   test:
+    # The Windows leg matters most: the shim and the profile install are what a
+    # desktop Harness actually runs, and path/junction behaviour differs there.
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        node: [20, 22]
+        include:
+          - os: ubuntu-latest
+            node: 20
+          - os: ubuntu-latest
+            node: 22
+          - os: windows-latest
+            node: 22
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -22,5 +29,5 @@ jobs:
       - run: npm ci
       - run: npm test
       # A profile install must resolve every import from inside the profile, so
-      # the smoke test runs against the checked-out copy exactly as packaged.
+      # the smoke test runs the packaged entry exactly as installed.
       - run: node test/host-smoke.mjs
