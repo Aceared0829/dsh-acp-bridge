@@ -220,13 +220,15 @@ test('reasoning sentinel clears an explicit effort', async () => {
   assert.equal(agent.model.current().reasoningEffort, undefined)
 })
 
-test('mode only changes before the first turn', async () => {
-  const agent = fakeAgent({ provider: 'prov', model: 'plain' }, 0)
+test('the in-session mode selector is off, so presets are picked by client entry', async () => {
+  // One client entry per preset is how each configuration gets its own agent.
+  // A selector here would put the roster back into the session UI, which is
+  // what the user asked to remove.
+  const agent = fakeAgent({ provider: 'prov', model: 'plain' })
   const agentPresets = {
     list: async () => [
       { id: 'default', name: 'Default', isDefault: true },
       { id: 'super-code', name: 'Super code' },
-      { id: 'broken-one', name: 'Broken', broken: 'missing plugin' },
     ],
     presetForSession: () => null,
     select: async () => 'default',
@@ -238,78 +240,40 @@ test('mode only changes before the first turn', async () => {
     permission: false,
   })
   const options = await control.options()
-  const mode = options.find((option) => option.id === 'mode')
-  assert.equal(mode.category, 'mode')
-  assert.deepEqual(
-    mode.options.map((entry) => entry.value),
-    ['default', 'super-code'],
-    'a broken preset is not offered',
-  )
+  assert.equal(options.find((option) => option.id === 'mode'), undefined, 'no mode selector')
+  assert.equal(await control.modes(), undefined, 'and no legacy modes field either')
+})
 
-  await control.set('mode', 'super-code')
+test('a preset applied through applyPreset still cannot pass the first turn', async () => {
+  const agent = fakeAgent({ provider: 'prov', model: 'plain' }, 0)
+  const selected = []
+  const agentPresets = {
+    list: async () => [
+      { id: 'default', name: 'Default', isDefault: true },
+      { id: 'minimal', name: 'Minimal' },
+    ],
+    presetForSession: () => null,
+    select: async (_agent, id) => {
+      selected.push(id)
+      return id
+    },
+  }
+  const control = new AcpModelControl({ llm: fakeLlm(), agentPresets }, agent, {
+    model: false,
+    reasoning: false,
+    mode: true,
+    permission: false,
+  })
+  await control.applyPreset('minimal')
+  assert.deepEqual(selected, ['minimal'], 'the pinned preset is applied')
 
   agent.setSeq(4)
-  await assert.rejects(() => control.set('mode', 'default'), (error) => {
+  await assert.rejects(() => control.applyPreset('default'), (error) => {
     assert.ok(error instanceof AcpInvalidParams)
     assert.match(error.message, /before the first turn/)
     return true
   })
 })
-
-test('mode presets carry no client-specific metadata', async () => {
-  // A previous attempt tagged each preset with JetBrains' permission-kind
-  // metadata so its mode menu would keep them. That made JetBrains offer to
-  // grant full access to a preset that is not a permission tier, and the preset
-  // still did not switch. The roster must stay plain.
-  const agent = fakeAgent({ provider: 'prov', model: 'plain' })
-  const agentPresets = {
-    list: async () => [
-      { id: 'default', name: 'Default', isDefault: true },
-      { id: 'super-code', name: 'Super code' },
-      { id: 'minimal', name: 'Minimal' },
-    ],
-    presetForSession: () => null,
-    select: async () => 'default',
-  }
-  const control = new AcpModelControl({ llm: fakeLlm(), agentPresets }, agent, {
-    model: false,
-    reasoning: false,
-    mode: true,
-    permission: false,
-  })
-  const options = await control.options()
-  const mode = options.find((option) => option.id === 'mode')
-  for (const entry of mode.options) {
-    assert.equal(entry._meta, undefined, `${entry.value} must not carry _meta`)
-  }
-  const legacy = await control.modes()
-  for (const entry of legacy.availableModes) {
-    assert.equal(entry._meta, undefined, `${entry.id} must not carry _meta`)
-  }
-})
-
-test('legacy modes mirror the mode option', async () => {
-  const agent = fakeAgent({ provider: 'prov', model: 'plain' })
-  const agentPresets = {
-    list: async () => [
-      { id: 'default', name: 'Default', isDefault: true },
-      { id: 'super-code', name: 'Super code' },
-    ],
-    presetForSession: () => 'super-code',
-    select: async () => 'super-code',
-  }
-  const control = new AcpModelControl({ llm: fakeLlm(), agentPresets }, agent, {
-    model: true,
-    reasoning: true,
-    mode: true,
-    permission: false,
-  })
-  const modes = await control.modes()
-  assert.equal(modes.currentModeId, 'super-code')
-  const options = await control.options()
-  assert.equal(options.find((option) => option.id === 'mode').currentValue, 'super-code')
-})
-
 test('the approval policy option reads and writes the approval service', async () => {
   const agent = fakeAgent({ provider: 'prov', model: 'plain' })
   const policies = []

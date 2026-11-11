@@ -118,6 +118,13 @@ test('the panel payload is serializable and carries real values', async () => {
   )
   assert.ok(state.launcher.zed.includes('"path"'))
 
+  // Splitting configurations into separate agent entries is the whole point of
+  // the per-preset launcher, so a bare entry must still exist for deployments
+  // with no presets mounted.
+  const parsed = JSON.parse(state.launcher.zed)
+  assert.ok(parsed.agent_servers['DSH-Default'] !== undefined, 'a default entry is always offered')
+  assert.deepEqual(state.launcher.presets, [], 'no presets when none are mounted')
+
   // Round-tripping through JSON twice must be stable: proof that nothing
   // circular or class-backed leaked into the payload.
   assert.deepEqual(JSON.parse(JSON.stringify(state)), state)

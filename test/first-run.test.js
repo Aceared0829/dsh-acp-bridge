@@ -32,7 +32,7 @@ function agentWithoutModel() {
   }
 }
 
-test('a session without a model still offers mode and approvals', async () => {
+test('a session without a model still offers the approval selector', async () => {
   const agentPresets = {
     list: async () => [
       { id: 'default', name: 'Default', isDefault: true },
@@ -51,8 +51,9 @@ test('a session without a model still offers mode and approvals', async () => {
   const options = await control.options()
   assert.deepEqual(
     options.map((option) => option.id),
-    ['mode', '_dsh_permission'],
-    'the model selector is honestly absent, the rest still work',
+    ['_dsh_permission'],
+    'the model selector is honestly absent, approvals still work, and the ' +
+      'mode selector stays out because presets are chosen by client entry',
   )
   assert.equal(
     logger.lines.length,

@@ -17,7 +17,7 @@
           model: true
           reasoning: true
           mode: true
-          permission: false
+          permission: true
           commands: true
           plan: true
           usage: true

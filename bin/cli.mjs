@@ -36,11 +36,14 @@ function fail(message) {
 const USAGE = `dsh-acp-stdio — connect an ACP client's stdio to a running DeepSeek Harness.
 
 Usage:
-  dsh-acp-stdio --url <ws-url> [--token <token>] [--insecure]
+  dsh-acp-stdio --url <ws-url> [--token <token>] [--preset <id>] [--insecure]
 
 Reads newline-delimited JSON-RPC on stdin, forwards each frame over the given
 WebSocket, and writes the frames it receives back to stdout. Point an ACP client
 at this command; the only argument it needs is the URL the Harness panel shows.
+
+--preset pins the agent preset for sessions created by this client, so one
+editor entry per preset gives each configuration its own entry.
 `
 
 /**
@@ -49,14 +52,14 @@ at this command; the only argument it needs is the URL the Harness panel shows.
  * @returns the parsed options.
  */
 function parseArgs(argv) {
-  const options = { url: undefined, token: undefined, insecure: false, help: false }
+  const options = { url: undefined, token: undefined, preset: undefined, insecure: false, help: false }
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index]
     if (arg === '--help' || arg === '-h') {
       options.help = true
     } else if (arg === '--insecure') {
       options.insecure = true
-    } else if (arg === '--url' || arg === '--token') {
+    } else if (arg === '--url' || arg === '--token' || arg === '--preset') {
       const value = argv[index + 1]
       if (value === undefined) fail(`${arg} requires a value`)
       options[arg.slice(2)] = value
@@ -65,6 +68,8 @@ function parseArgs(argv) {
       options.url = arg.slice('--url='.length)
     } else if (arg.startsWith('--token=')) {
       options.token = arg.slice('--token='.length)
+    } else if (arg.startsWith('--preset=')) {
+      options.preset = arg.slice('--preset='.length)
     } else {
       fail(`unknown argument: ${arg}`)
     }
@@ -89,8 +94,15 @@ if (options.token === undefined && !options.insecure) {
   process.stderr.write('dsh-acp-stdio: no --token given; connecting unauthenticated\n')
 }
 
+// The preset travels as a request header rather than as a frame, because a
+// frame would have to be injected into the protocol stream and the whole point
+// of this shim is that it never writes into that stream itself.
+const presetHeaders = options.preset === undefined ? {} : { 'x-dsh-acp-preset': options.preset }
 const socket = new WebSocket(options.url, {
-  ...(options.token === undefined ? {} : { headers: { authorization: `Bearer ${options.token}` } }),
+  headers: {
+    ...(options.token === undefined ? {} : { authorization: `Bearer ${options.token}` }),
+    ...presetHeaders,
+  },
 })
 
 let stdinStarted = false
