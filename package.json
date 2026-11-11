@@ -61,7 +61,7 @@
                     "node":  "\u003e=20"
                 },
     "scripts":  {
-                    "test":  "node --test test/unit.test.js test/projection.test.js test/transport.test.js test/shim.test.js \u0026\u0026 node test/host-smoke.mjs"
+                    "test":  "node --test test/unit.test.js test/first-run.test.js test/panel-state.test.js test/projection.test.js test/transport.test.js test/shim.test.js \u0026\u0026 node test/host-smoke.mjs"
                 },
     "dependencies":  {
                          "@agentclientprotocol/sdk":  "1.5.0",
