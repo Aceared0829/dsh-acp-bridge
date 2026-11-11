@@ -11,6 +11,7 @@
         host: 127.0.0.1
         provider: ''
         model: ''
+        approvalPolicy: ask
         approvalTimeoutMs: 120000
         expose:
           model: true

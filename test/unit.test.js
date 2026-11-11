@@ -19,6 +19,7 @@ import {
   isCanonicalBase64,
   modelValue,
   parseModelValue,
+  pinApprovalPolicy,
   turnEndToStopReason,
 } from '../lib/acp.js'
 import { normalizePrefix, websocketPath } from '../lib/config.js'
@@ -47,6 +48,21 @@ test('base64 admission rejects aliases and padded garbage', () => {
   assert.equal(isCanonicalBase64('aGk'), false, 'unpadded is not canonical')
   assert.equal(isCanonicalBase64('aG k='), false)
   assert.equal(isCanonicalBase64(''), false)
+})
+
+test('a new ACP session records ask when the Harness default is never', () => {
+  const appended = []
+  const session = {
+    append(type, data) {
+      appended.push({ type, data })
+    },
+  }
+  const approval = { effectivePolicy: () => 'never', overrideOf: () => undefined }
+  assert.equal(pinApprovalPolicy(session, approval, 'ask'), true)
+  assert.deepEqual(appended, [{ type: 'approval/policy', data: { policy: 'ask' } }])
+  assert.equal(pinApprovalPolicy(session, { effectivePolicy: () => 'ask' }, 'ask'), false)
+  assert.equal(pinApprovalPolicy(session, approval, 'inherit'), false)
+  assert.equal(appended.length, 1, 'inherit and a matching policy append nothing')
 })
 
 test('route prefixes normalize to one shape', () => {
